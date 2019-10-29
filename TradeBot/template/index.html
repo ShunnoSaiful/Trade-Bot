@@ -1,0 +1,291 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+        <link rel='stylesheet' href='{% static "css/style.css" %}' />
+		<title>Trade Bot</title>
+	</head>
+	<body>
+		<div class="container">
+			<section id="tab-menu">
+				<nav class="main-menu navbar navbar-expand-lg navbar-light bg-light">
+					<button class="navbar-toggler" type="button"data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				    	<span class="navbar-toggler-icon"></span>
+				  	</button>
+
+	  				<div class="row collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="ml-auto nav header-menu" id="myTab" role="tablist">
+							<li class="">
+								<a class="active" id="plans-tab"data-toggle="tab" href="#plans" role="tab"aria-controls="plans" aria-selected="true">
+									Plans
+								</a>
+							</li>
+							<li class="">
+								<a class="" id="faq-tab" data-toggle="tab" href="#faq" role="tab" aria-controls="faq" aria-selected="false">
+									FAQ
+								</a
+								>
+							</li>
+							<li class="">
+								<a class="" id="features-tab" data-toggle="tab" href="#features" role="tab" aria-controls="features" aria-selected="false">
+									Features
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<div class="tab-content" id="myTabContent">
+
+				<!--------------------PLANS---------------->
+
+					<div class="tab-pane fade show active price-table" id="plans" role="tabpanel" aria-labelledby="plans-tab">
+						<div>
+							{% for plan in plans %}
+							<div class="columns">
+								<ul class="price mt-5">
+									<li class="header font-weight-bold">
+										${{plan.price}}</br>
+	                                    <small>{{plan.per_price}}</small>
+	                                </li>
+	                                <li class="font-weight-bold" style="font-size: 30px;color: #ccc">{{plan.title}}
+	                                </li>
+									<li>
+										{{plan.first_info}}
+									</li>
+									<li>
+										{{plan.second_info}}
+									</li>
+									<li>
+										{{plan.third_info}}
+									</li>
+									<li>
+										{{plan.fourth_info|default:"-" }}
+									</li>
+									<li>
+										{{plan.fifth_info|default:"-"}}
+									</li>
+
+								</ul>
+							</div>
+							{% endfor %}
+						</div>
+						<div class="footer-area">
+							<div class="container">
+								<div class="row text-center d-block d-sm-none">
+									<div class="col-md-12">
+										{% for down in download %}
+										<a href="{{down.download_file.url}}" class="btn button-bg">
+							                <i class="fas fa-download"></i>  
+							                Download
+							            </a>
+							            {% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				<!-----------------FAQ--------------------->
+
+
+					<div class="tab-pane fade" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+						<h1 class="py-4 text-center text-dark">
+							Frequently Asking Question
+						</h1>
+						<div class="container">
+							<div class="tab row border-0 faq">
+								{% for sc in section %}
+							  <div class="tablinks col-md-{{column}} col-4 section mb-5 {% if forloop.first %} active {% endif %}" onclick="questionSection(event, '{{sc.id}}')">
+							  		<div class="scip">
+									  	<i class="font {{sc.fontawesome}}"></i>
+									  	{% if sc.svg_image %}
+									    <img src='{{ sc.svg_image.url }}' class='sc_image' />
+									    {% endif %}
+									    <div class="hgt"></div>
+									  	<p class="text-center" style="cursor: pointer;height: 10px;">{{sc.question_section}}
+									  	</p>
+							  		</div>
+
+							  </div>
+							  {% endfor %}
+							</div>
+							{% for sc in section %}
+							<div id="{{sc.id}}" class="tabcontent border-0" style="{% if forloop.first %} display: block !important; {% endif %}">
+								<div class="row" id="wrapper">
+									<div class="col-md-4" id="sidebar-wrapper">
+										<div class="search-bar input-group">
+			                                <input id="myInput" target_ul ="myUL{{ sc.id }}" type="text" onkeyup="myFunction(this)" placeholder="Type your question here...." class="form-control">
+			                                <div class="input-group-append">
+			                                    <span class="input-group-text bg text-white">
+			                                    <i class="fas fa-search"></i>
+			                                    </span>
+			                                </div>
+			                            </div>
+			                            <div class="overflowTest">
+											<ul id="myUL{{ sc.id }}" role="tablist" class="nav nav-tabs list-group">
+
+				                                {% for q in sc.question_set.all %}
+				                                <li>
+				                                    <a class="list-group-item list-group-item-action bg-light" data-toggle="tab" href="#faqx{{q.id}}">{{q}}</a>
+				                                </li>
+				                                {% endfor %}
+				                            </ul>
+				                        </div>
+									</div>
+
+							<!---------- Page Content --------->
+
+									<div class="col-md-8 pt-5" id="page-content-wrapper">
+										<div class="container-fluid">
+											<div class="tab-content">
+
+			                                	{% for ans in sc.question_set.all %}
+			                                	<div id="faqx{{ans.id}}" class="tab-pane fade">
+			                                		<h3>{{ans.question|safe}}</h3>
+			                                    	<p>{{ans.answer.answer|safe}}</p>
+			                                	</div>
+			                                	{% endfor %}
+			                            	</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+						
+					</div>
+
+				<!-----------------FEATURES-------------------->
+
+
+					<div class="tab-pane fade m-5" id="features" role="tabpanel" aria-labelledby="features-tab">
+						<div id="accordion" class="helplist">
+							{%for ft in feature %}
+						   		{% for category in ft.description_set.all %}
+						   		{% endfor %}
+
+
+						    <div class="card">
+						        <div class="card-header" id="heading{{ft.id}}" data-toggle="collapse" data-target="#collapse{{ft.id}}" aria-expanded="false" aria-controls="collapse{{ft.id}}">
+						            <div class="panel-title arrowed">
+						                <h5>{{ft.category}}</h5>
+						            </div>
+						        </div>
+						        <div id="collapse{{ft.id}}" class="collapse" aria-labelledby="heading{{ft.id}}" data-parent="#accordion">
+						            <div class="card-body">
+						                <div class="elem textonly">
+						                    <div id="accordion2" class="collapseblock">
+						                    	{% for category in ft.description_set.all %}
+						                        <div class="cardsmall">
+						                            <div class="cardsmall-header">
+						                                <span class="arrowed" data-toggle="collapse" data-parent="#accordion2" href="#collapseEmptyProcList{{category.id}}">
+																<p class="font-weight-bold mb-0">{{category.sub_category|safe}}
+																</p>
+															</span>
+						                            </div>
+						                            <div id="collapseEmptyProcList{{category.id}}" class="collapse">
+						                                <div class="ml-5">
+						                                    <p>{{category.content|safe}}</p>
+						                                </div>
+						                            </div>
+						                        </div>
+						                     {% endfor %}
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+	    					</div>
+	    					{% endfor %}
+						</div>
+						<div class="footer-area mt-5">
+							<div class="container">
+								<div class="row text-center d-block d-sm-none">
+									<div class="col-md-12">
+										{% for down in download %}
+										<a href="{{down.download_file.url}}" class="btn button-bg">
+							                <i class="fas fa-download"></i>  
+							                Download
+							            </a>
+							            {% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<footer id="footer" class="d-flex justify-content-center p-5">
+					<div class="footer-area">
+						<div class="container">
+							<div class="row text-center">
+								<div class="col-md-12 d-none d-sm-block">
+									{% for down in download %}
+									<a href="{{down.download_file.url}}" class="btn button-bg">
+						                <i class="fas fa-download"></i>  
+						                Download
+						            </a>
+						            {% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</section>
+		</div>
+		<script src='{% static "js/jquery-3.3.1.min.js" %}'></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"
+		></script>
+		<script>
+
+				///////// SECTION TAB FUNCTION  ///////////
+
+			function questionSection(evt, id) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tabcontent");
+			  for (i = 0; i < tabcontent.length; i++) {
+			    tabcontent[i].style.display = "none";
+			  }
+			  tablinks = document.getElementsByClassName("tablinks");
+			  for (i = 0; i < tablinks.length; i++) {
+			    tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(id).style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+
+				///////// SEARCH SUGGESTION FUNCTION  ///////////
+
+			function myFunction(self) {
+			    var filter, ul, li, a, i, txtValue;
+			    filter = $(self).val().toUpperCase();
+			    var target_ul = $(self).attr("target_ul")
+			    ul = document.getElementById(target_ul);
+			    li = ul.getElementsByTagName("li");
+			    for (i = 0; i < li.length; i++) {
+			        a = li[i].getElementsByTagName("a")[0];
+			        txtValue = a.textContent || a.innerText;
+			        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+			            li[i].style.display = "";
+			        } else {
+			            li[i].style.display = "none";
+			        }
+			    }
+			}
+			</script>
+
+	</body>
+</html>

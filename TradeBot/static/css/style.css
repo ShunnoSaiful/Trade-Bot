@@ -1,0 +1,188 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Ubuntu', sans-serif;
+	background-color: #e7eef5;
+}
+* {
+	box-sizing: border-box;
+}
+
+/*********************MENU BAR****************************/
+ul.header-menu{
+    margin:0;
+    padding: 0;
+    list-style: none;
+}
+ul.header-menu li{
+    display: inline;
+}
+ul.header-menu li a{
+    padding: 10px 15px;
+    display: inline-block;
+    color:#000;
+    text-transform: capitalize;
+    outline: none;
+    text-decoration: none;
+    position: relative;
+    border-bottom: 3px solid transparent;
+}
+
+ul.header-menu li a:hover{
+    border-bottom: 3px solid #4b5c6d;
+}
+ul.header-menu li a.active{
+    background-color: #fff;
+}
+/*********************PRICING TABLE****************************/
+
+.columns {
+	float: left;
+	width: 33.3%;
+	padding-bottom: 20px;
+}
+.price-table{
+	margin: 5% 10% 0% 10%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+
+}
+.price {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+    text-align: center;
+    line-height: 30px;
+    background-color: #4b5c6d;
+    color: #fff;
+}
+.price .header {
+    background-color: #d1dae6;
+	color: #4b5c6d;
+	font-size: 50px;
+}
+.price .header small{
+	font-size: 20px;
+}
+.price li {
+    border-bottom: 1px solid #eee;
+	border-right: 1px solid #eee;
+	padding: 20px;
+	text-align: center;
+}
+
+/*********************FAQ****************************/
+.faq{
+  background-color: #e7eef5!important;
+}
+.overflowTest {
+  color: white;
+  height: 400px;
+  overflow: scroll;
+  margin: 0px;
+}
+.overflowTest li{
+  list-style: none;
+}
+.overflowTest ul li .active{
+  border: none;
+  color: #4b5c6d;
+}
+.search-bar{
+  padding:10px;
+  background-color: #4b5c6d;
+}
+.search-bar div span{
+  background-color: #47c728;
+  border: none;
+}
+#faq{
+  margin: 40px;
+}
+.scip{
+background-color: #d1dae6;
+padding: 20px 5px;
+border-radius: 5px;
+font-weight: 700;
+line-height: 1.2;
+height: 130px;
+color: #4b5c6d;
+text-align: center;
+}
+.hgt {
+    height: 10px;
+}
+.font.fas.fa-download {
+    font-size: 50px;
+}
+.sc_image{
+  width: 45%;
+}
+.scip:hover{
+  background-color: #4b5c6d;
+  color: #fff;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/*********************FOOTER****************************/
+
+#footer {
+    position: fixed;
+    right: -30px;
+    bottom:-40px;
+}
+.button-bg{
+    background-color: #4b5c6d;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+}
+.button-bg:hover{
+  color: #fff;
+  background-color: #2a445e;
+}
+
+/*********************MEDIA QUERY****************************/
+
+
+@media(max-width: 768px){
+    .overflowTest{
+        height:100px;
+    }
+    #faq h1{
+      font-size: 20px;
+    }
+    .section p{
+      font-size: 14px;
+    }
+    .accordion__itemTitle{
+      font-size: 15px;
+    }
+
+    .columns {
+        width: 100%;
+    }
+    .navbar {
+      flex-wrap: nowrap!important;
+    }
+    ul.header-menu li a {
+    padding: 5px 15px;
+    }
+    .scip{
+        padding: 46px 5px;
+    }
+    .font.fas.fa-download {
+        font-size: 30px;
+    }
+}
